@@ -1,0 +1,132 @@
+{
+    "seed": 2,
+    "train_cfgs": {
+        "device": "cpu",
+        "torch_threads": 16,
+        "vector_env_nums": 10,
+        "parallel": 1,
+        "total_steps": 120000,
+        "warmup_epochs": 300,
+        "epochs": 400
+    },
+    "algo_cfgs": {
+        "steps_per_epoch": 300,
+        "update_iters": 10,
+        "batch_size": 64,
+        "target_kl": 0.02,
+        "entropy_coef": 0.0,
+        "reward_normalize": true,
+        "cost_normalize": false,
+        "obs_normalize": true,
+        "hidden_obs_normalize": true,
+        "kl_early_stop": true,
+        "use_max_grad_norm": true,
+        "max_grad_norm": 0.5,
+        "use_critic_norm": true,
+        "critic_norm_coef": 0.001,
+        "gamma": 0.8,
+        "cost_gamma": 0.8,
+        "lam": 0.8,
+        "lam_c": 0.8,
+        "clip": 0.2,
+        "adv_estimation_method": "gae",
+        "standardized_rew_adv": true,
+        "standardized_cost_adv": true,
+        "penalty_coef": 0.0,
+        "use_cost": true,
+        "lagrange_window": 50
+    },
+    "logger_cfgs": {
+        "use_wandb": false,
+        "wandb_project": "omnisafe",
+        "use_tensorboard": true,
+        "save_model_freq": 100,
+        "log_dir": "./runs",
+        "window_lens": 100,
+        "log_trajs": false
+    },
+    "model_cfgs": {
+        "weight_initialization_mode": "kaiming_uniform",
+        "actor_type": "gaussian_learning",
+        "linear_lr_decay": true,
+        "exploration_noise_anneal": false,
+        "std_range": [
+            0.5,
+            0.1
+        ],
+        "actor": {
+            "obs_encoder": [],
+            "h_encoder": [],
+            "hidden_sizes": [
+                64,
+                64
+            ],
+            "activation": "relu",
+            "obs_encoder_activation": "identity",
+            "h_encoder_activation": "identity",
+            "out_activation": "tanh",
+            "lr": 0.0003,
+            "last_layer_init_weight": 0.01
+        },
+        "critic": {
+            "obs_encoder": [],
+            "hidden_sizes": [
+                64,
+                64
+            ],
+            "activation": "relu",
+            "obs_encoder_activation": "identity",
+            "h_encoder_activation": "identity",
+            "out_activation": "identity",
+            "lr": 0.0003
+        },
+        "cost_critic": {
+            "obs_encoder": [],
+            "h_encoder": [],
+            "hidden_sizes": [
+                64,
+                64
+            ],
+            "activation": "relu",
+            "obs_encoder_activation": "identity",
+            "h_encoder_activation": "identity",
+            "out_activation": "identity",
+            "lr": 0.0003,
+            "cost_normalize": true,
+            "use_critic_norm": true,
+            "critic_norm_coef": 0.01
+        },
+        "classifier": {
+            "pt_file": null,
+            "pt_model_type": "DistributionGRU",
+            "train_dataset": null,
+            "test_dataset": null,
+            "hidden_dim": 1,
+            "stack_layer": 1,
+            "decoder_arch": [
+                16,
+                16
+            ],
+            "lr": 0.0003,
+            "batchsize": 32,
+            "dropout": 0.0,
+            "retrain_traj_prop": 0.1,
+            "max_retrain_epoch": 1,
+            "retrain_target_acc": 0.975,
+            "min_retrain_trajs": 2,
+            "random_retrain_traj": null
+        }
+    },
+    "lagrange_cfgs": {
+        "cost_limit": -0.9,
+        "lagrangian_multiplier_init": 1.0,
+        "lambda_lr": 0.035,
+        "lambda_optimizer": "Adam"
+    },
+    "env_cfgs": {
+        "render_mode": "rgb_array"
+    },
+    "exp_name": "PPOLagLearnedHuman-{highway-fast-v0}",
+    "env_id": "highway-fast-v0",
+    "algo": "PPOLagLearnedHuman"
+}

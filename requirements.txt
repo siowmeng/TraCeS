@@ -1,0 +1,12 @@
+numpy>=1.23.5
+torch>=2.5.1
+gymnasium>=0.28.1
+omnisafe>=0.5.0
+pandas>=2.0.3
+tqdm>=4.67.0
+setuptools>=75.1.0
+h5py>=3.12.1
+rich>=13.9.4
+ubcrl>=0.0.0
+opencv-python>=4.11.0.86
+imageio>=2.36.0

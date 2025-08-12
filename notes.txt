@@ -1,0 +1,1 @@
+LearnedBC: 25 augment slice, 20 epoch retrain, 0.95 target acc & 10 retrain epoch max

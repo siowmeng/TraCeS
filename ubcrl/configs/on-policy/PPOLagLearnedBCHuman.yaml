@@ -1,0 +1,195 @@
+defaults:
+  # seed for random number generator
+  seed: 2
+  # training configurations
+  train_cfgs:
+    # device to use for training, options: cpu, cuda, cuda:0, cuda:0,1, etc.
+    device: cpu
+    # number of threads for torch
+    torch_threads: 16
+    # number of vectorized environments
+    vector_env_nums: 1
+    # number of parallel agent, similar to a3c
+    parallel: 1
+    # total number of steps to train
+    total_steps: 10000000
+  # algorithm configurations
+  algo_cfgs:
+    # number of steps to update the policy
+    steps_per_epoch: 20000
+    # number of iterations to update the policy
+    update_iters: 10
+#    update_iters: 20
+    # batch size for each iteration
+    batch_size: 32
+    # target kl divergence
+    target_kl: 0.02
+    # entropy coefficient
+    entropy_coef: 0.001
+    # normalize reward
+    reward_normalize: False
+    # normalize cost
+    cost_normalize: False
+    # normalize observation
+    obs_normalize: True
+    # early stop when kl divergence is bigger than target kl
+    kl_early_stop: True
+    # use max gradient norm
+    use_max_grad_norm: True
+    # max gradient norm
+    max_grad_norm: 40.0
+    # use critic norm
+    use_critic_norm: True
+    # critic norm coefficient
+    critic_norm_coef: 0.001
+    # reward discount factor
+    gamma: 0.99
+    # cost discount factor
+    cost_gamma: 0.99
+    # lambda for gae
+    lam: 0.95
+    # lambda for cost gae
+    lam_c: 0.95
+    # clip ratio
+    clip: 0.2
+    # advantage estimation method, options: gae, retrace
+    adv_estimation_method: gae
+    # standardize reward advantage
+    standardized_rew_adv: True
+    # standardize cost advantage
+    standardized_cost_adv: True
+    # penalty coefficient
+    penalty_coef: 0.0
+    # use cost
+    use_cost: True
+  # logger configurations
+  logger_cfgs:
+    # use wandb for logging
+    use_wandb: False
+    # wandb project name
+    wandb_project: omnisafe
+    # use tensorboard for logging
+    use_tensorboard: True
+    # save model frequency
+    save_model_freq: 100
+    # save logger path
+    log_dir: "./runs"
+    # save model path
+    window_lens: 100
+  # model configurations
+  model_cfgs:
+    # weight initialization mode
+    weight_initialization_mode: "kaiming_uniform"
+    # actor type, options: gaussian, gaussian_learning
+    actor_type: gaussian_learning
+    # linear learning rate decay
+    linear_lr_decay: True
+    # exploration noise anneal
+    exploration_noise_anneal: False
+    # std upper bound, and lower bound
+    std_range: [0.5, 0.1]
+    # actor network configurations
+    actor:
+      # hidden layer sizes
+      hidden_sizes: [16, 16]
+      # activation function
+      activation: tanh
+      # out_activation: tanh
+      # learning rate
+      lr: 0.0003
+    critic:
+      # hidden layer sizes
+      hidden_sizes: [16, 16]
+      # activation function
+      activation: tanh
+      # learning rate
+      lr: 0.0003
+      cost_normalize: False
+    classifier:
+      pt_file: null
+      pt_model_type: "CostBudgetMLP"
+#      pt_model_type: "RLSF"
+      train_dataset: null
+      test_dataset: null
+      decoder_arch: [16, 16]
+      lr: 0.001
+      batchsize: 32
+#      max_retrain_epoch: 7
+      max_retrain_epoch: 1
+      retrain_target_acc: 0.975
+      random_retrain_traj: null
+#      save_dir: null
+  # lagrangian configurations
+  lagrange_cfgs:
+    # Tolerance of constraint violation
+    cost_limit: 25.0
+    # Initial value of lagrangian multiplier
+    lagrangian_multiplier_init: 0.001
+    # Learning rate of lagrangian multiplier
+    lambda_lr: 0.035
+    # Type of lagrangian optimizer
+    lambda_optimizer: "Adam"
+  # environment specific configurations
+  env_cfgs: {}
+
+SafetyHalfCheetahVelocity-v1:
+  train_cfgs:
+    # number of vectorized environments
+    vector_env_nums: 1
+    total_steps: 15000
+  algo_cfgs:
+    # number of steps to update the policy
+    steps_per_epoch: 150
+  # model configurations
+  model_cfgs:
+    actor:
+      lr: 0.0003
+    classifier:
+#      pt_file: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyHalfCheetahVelocity-v1_CostBudgetMLP_128.pt"
+#      train_dataset: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyHalfCheetahVelocity-v1_CostBudgetMLP_traindataset.pt"
+#      test_dataset: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyHalfCheetahVelocity-v1_CostBudgetMLP_testdataset.pt"
+      lr: 0.001
+#      save_dir: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/classifier_pts/SafetyHalfCheetahVelocity-v1/"
+  env_cfgs: {max_episode_steps: 150, render_mode: 'rgb_array'}
+
+SafetyHopperVelocity-v1:
+  train_cfgs:
+    # number of vectorized environments
+    vector_env_nums: 1
+    total_steps: 15000
+  algo_cfgs:
+    # number of steps to update the policy
+    steps_per_epoch: 150
+  # model configurations
+  model_cfgs:
+    actor:
+      lr: 0.0003
+    classifier:
+#      pt_file: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyHopperVelocity-v1_CostBudgetMLP_128.pt"
+#      train_dataset: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyHopperVelocity-v1_CostBudgetMLP_traindataset.pt"
+#      test_dataset: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyHopperVelocity-v1_CostBudgetMLP_testdataset.pt"
+      lr: 0.001
+#      save_dir: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/classifier_pts/SafetyHopperVelocity-v1/"
+  # environment specific configurations
+  env_cfgs: {terminate_when_unhealthy: False, max_episode_steps: 150, render_mode: 'rgb_array'}
+
+SafetyWalker2dVelocity-v1:
+  train_cfgs:
+    # number of vectorized environments
+    vector_env_nums: 1
+    total_steps: 15000
+  algo_cfgs:
+    # number of steps to update the policy
+    steps_per_epoch: 150
+  # model configurations
+  model_cfgs:
+    actor:
+      lr: 0.0003
+    classifier:
+#      pt_file: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyWalker2dVelocity-v1_CostBudgetMLP_128.pt"
+#      train_dataset: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyWalker2dVelocity-v1_CostBudgetMLP_traindataset.pt"
+#      test_dataset: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/model/22-01-2025/SafetyWalker2dVelocity-v1_CostBudgetMLP_testdataset.pt"
+      lr: 0.0003
+#      save_dir: "/common/home/users/s/smlow.2020/ubcrl_expt/classifier/learnedBC/classifier_pts/SafetyWalker2dVelocity-v1/"
+  # environment specific configurations
+  env_cfgs: {terminate_when_unhealthy: False, max_episode_steps: 150, render_mode: 'rgb_array'}
