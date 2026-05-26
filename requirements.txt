@@ -1,0 +1,12 @@
+numpy==1.23.5
+gymnasium==0.28.1
+safety-gymnasium==1.0.0
+bullet-safety-gym==1.4.0
+omnisafe==0.5.0
+pandas==2.0.3
+tqdm==4.67.0
+setuptools>=75.1.0
+h5py==3.12.1
+rich==13.9.4
+# Optional for human-label/video workflows:
+# opencv-python==4.11.0.86

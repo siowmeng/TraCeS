@@ -1,0 +1,41 @@
+# IDE settings
+.idea/
+
+# Python cache (matches anywhere in the project)
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Python packaging metadata
+*.egg-info/
+
+.ipynb_checkpoints/
+log/
+notebooks/
+
+# Local/private runtime artifacts
+runs/
+scripts/runs/
+exp-x/
+videos/
+scripts/videos/
+model/
+wandb/
+.env
+.env.*
+*.pt
+*.pth
+*.ckpt
+events.out.tfevents*
+nohup.out
+
+# Local private path/config overrides
+local_configs/*.yaml
+local_configs/*.yml
+local_configs/*.json
+*.local.yaml
+*.local.yml
+
+# Allow small released pretrained estimator checkpoints, but keep large .pt datasets ignored
+!artifacts/pretrained_estimators/**/*_DistributionGRU_[0-9]*.pt
+!artifacts/pretrained_estimators/**/*_CostBudgetMLP_[0-9]*.pt
